@@ -5,13 +5,7 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'
 import './graph.css'
 // import Utils from 'https://www.chartjs.org/samples/2.9.4/utils.js'
-const filterArr = (arr) => {
-  const newArr = []
-  for(var i=0;i<arr.length;i++) if(arr[i].original_value!=null && arr[i].min_band!=null && arr[i].max_band!=null && arr[i].timestamp!=null) {newArr.push(arr[i]); console.log(arr[i].timestamp)}
-  return newArr
-}
-const Graph = ({arr, str}) => {
-  const newArr = filterArr(arr)
+const Graph = ({newArr, str}) => {
   const down = (ctx, value) =>{
     const ind = ctx.p0DataIndex
     // console.log('abc', arr[ind].original_value.$numberDecimal>=arr[ind].min_band.$numberDecimal && arr[ind].original_value.$numberDecimal<=arr[ind].max_band.$numberDecimal, arr[ind].original_value.$numberDecimal, arr[ind].min_band.$numberDecimal , arr[ind].original_value.$numberDecimal, arr[ind].max_band.$numberDecimal)
@@ -19,7 +13,7 @@ const Graph = ({arr, str}) => {
     else return '#d94810'
   };
 
-  const labels = arr.map((object)=>{
+  const labels = newArr.map((object)=>{
     var ts = object.timestamp
     ts = ts.split(/[, : \- T ]/)
     // console.log(ts)
@@ -105,24 +99,28 @@ const config = {
           text: 'Value'
         }
       },
-      xAxes: [{
+      xAxes: {
         gridLines: {
             color: "rgba(0, 0, 0, 0)",
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'probability'
         }
-    }],
-    yAxes: [{
+    },
+    yAxes: {
         gridLines: {
             color: "rgba(0, 0, 0, 0)",
         }   
-    }]
+    }
     }
   },
 };
   return (
-    <div className="container center">
-      <h1>{str}</h1>
+    <>
+      <h1><i class="fas fa-chart-line"></i> {str}</h1>
       <Line data={data} />
-    </div>
+    </>
   );
 };
 
