@@ -7,6 +7,13 @@ import './graph.css'
 // import Utils from 'https://www.chartjs.org/samples/2.9.4/utils.js'
 
 const Graph = ({arr}) => {
+  const down = (ctx, value) =>{
+    console.log(ctx)
+    const ind = ctx.p0DataIndex
+    // console.log('abc', arr[ind].original_value.$numberDecimal>=arr[ind].min_band.$numberDecimal && arr[ind].original_value.$numberDecimal<=arr[ind].max_band.$numberDecimal, arr[ind].original_value.$numberDecimal, arr[ind].min_band.$numberDecimal , arr[ind].original_value.$numberDecimal, arr[ind].max_band.$numberDecimal)
+    if((Number(arr[ind].original_value.$numberDecimal)>=Number(arr[ind].min_band.$numberDecimal) && Number(arr[ind].original_value.$numberDecimal)<=Number(arr[ind].max_band.$numberDecimal)) && (Number(arr[ind+1].original_value.$numberDecimal)>=Number(arr[ind+1].min_band.$numberDecimal) && Number(arr[ind+1].original_value.$numberDecimal)<=Number(arr[ind+1].max_band.$numberDecimal))) return value;
+    else return '#d94810'
+  };
   arr = arr.slice(0,600)
   const labels = arr.map((object)=>{
     var ts = object.timestamp
@@ -26,6 +33,9 @@ const data = {
       data: arr.map((object)=>{
         return object.original_value.$numberDecimal
       }),
+      segment: {
+        borderColor: ctx => down(ctx, '#6174d0') || '#6174d0'
+      },
     }, 
     // {
     //   label: 'Forcasted Value',
@@ -45,6 +55,7 @@ const data = {
         return object.min_band.$numberDecimal
       }),
       fill: true,
+      tension: 0.1,
     },
     {
       label: 'Max Band',
@@ -54,6 +65,7 @@ const data = {
         return object.max_band.$numberDecimal
       }),
       fill: true,
+      tension:0.1,
     }
   ]
 };
