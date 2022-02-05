@@ -5,16 +5,20 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'
 import './graph.css'
 // import Utils from 'https://www.chartjs.org/samples/2.9.4/utils.js'
-
-const Graph = ({arr}) => {
+const filterArr = (arr) => {
+  const newArr = []
+  for(var i=0;i<arr.length;i++) if(arr[i].original_value!=null && arr[i].min_band!=null && arr[i].max_band!=null && arr[i].timestamp!=null) {newArr.push(arr[i]); console.log(arr[i].timestamp)}
+  return newArr
+}
+const Graph = ({arr, str}) => {
+  const newArr = filterArr(arr)
   const down = (ctx, value) =>{
-    console.log(ctx)
     const ind = ctx.p0DataIndex
     // console.log('abc', arr[ind].original_value.$numberDecimal>=arr[ind].min_band.$numberDecimal && arr[ind].original_value.$numberDecimal<=arr[ind].max_band.$numberDecimal, arr[ind].original_value.$numberDecimal, arr[ind].min_band.$numberDecimal , arr[ind].original_value.$numberDecimal, arr[ind].max_band.$numberDecimal)
-    if((Number(arr[ind].original_value.$numberDecimal)>=Number(arr[ind].min_band.$numberDecimal) && Number(arr[ind].original_value.$numberDecimal)<=Number(arr[ind].max_band.$numberDecimal)) && (Number(arr[ind+1].original_value.$numberDecimal)>=Number(arr[ind+1].min_band.$numberDecimal) && Number(arr[ind+1].original_value.$numberDecimal)<=Number(arr[ind+1].max_band.$numberDecimal))) return value;
+    if((Number(newArr[ind].original_value.$numberDecimal)>=Number(newArr[ind].min_band.$numberDecimal) && Number(newArr[ind].original_value.$numberDecimal)<=Number(newArr[ind].max_band.$numberDecimal)) && (Number(newArr[ind+1].original_value.$numberDecimal)>=Number(newArr[ind+1].min_band.$numberDecimal) && Number(newArr[ind+1].original_value.$numberDecimal)<=Number(newArr[ind+1].max_band.$numberDecimal))) return value;
     else return '#d94810'
   };
-  arr = arr.slice(0,600)
+
   const labels = arr.map((object)=>{
     var ts = object.timestamp
     ts = ts.split(/[, : \- T ]/)
@@ -30,12 +34,13 @@ const data = {
       fill: false,
       backgroundColor: '#6174d0',
       borderColor: '#6174d0',
-      data: arr.map((object)=>{
+      data: newArr.map((object)=>{
         return object.original_value.$numberDecimal
       }),
       segment: {
         borderColor: ctx => down(ctx, '#6174d0') || '#6174d0'
       },
+      tension:1,
     }, 
     // {
     //   label: 'Forcasted Value',
@@ -43,7 +48,7 @@ const data = {
     //   backgroundColor: 'green',
     //   borderColor: 'green',
     //   borderDash: [5, 5],
-    //   data: arr.map((object)=>{
+    //   data: newArr.map((object)=>{
     //     return object.forecast_value.$numberDecimal||0
     //   }),
     // }, 
@@ -51,7 +56,7 @@ const data = {
       label: 'Min Band',
       backgroundColor: 'white',
       borderColor: 'white',
-      data: arr.map((object)=>{
+      data: newArr.map((object)=>{
         return object.min_band.$numberDecimal
       }),
       fill: true,
@@ -61,7 +66,7 @@ const data = {
       label: 'Max Band',
       backgroundColor: '#e1e4e8',
       borderColor: '#e1e4e8',
-      data: arr.map((object)=>{
+      data: newArr.map((object)=>{
         return object.max_band.$numberDecimal
       }),
       fill: true,
@@ -99,12 +104,23 @@ const config = {
           display: true,
           text: 'Value'
         }
-      }
+      },
+      xAxes: [{
+        gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+        }
+    }],
+    yAxes: [{
+        gridLines: {
+            color: "rgba(0, 0, 0, 0)",
+        }   
+    }]
     }
   },
 };
   return (
     <div className="container center">
+      <h1>{str}</h1>
       <Line data={data} />
     </div>
   );

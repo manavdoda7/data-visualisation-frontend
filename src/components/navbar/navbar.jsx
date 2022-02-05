@@ -10,13 +10,23 @@ const toggleNav = () =>{
     if(document.getElementById('sidebarCollapse').style.display=='none') document.getElementById('sidebarCollapse').style.display='unset'
     else document.getElementById('sidebarCollapse').style.display='none'
 }
+const remove_ = (measure, dimensions) =>{
+  var arr = measure.split('_')
+  var str = ''
+  for(var i=0;i<arr.length;i++) {
+    str+=arr[i]+' '
+  }
+  str+='of '+dimensions[1].value+' in '+dimensions[0].value
+  return str
+}
 
-const Navbar = ({arr}) => {
-    const onClick = (e, _id)=>{
+const Navbar = () => {
+    const onClick = (e, _id, str)=>{
         e.preventDefault()
+        toggleNav()
         axios.get(url + `/singlemetric/${_id}`)
         .then(response=>{
-            console.log(response.data)
+            console.log(response.data.result[0])
             if(response.data.success==false) {
                 setGraph(
                     <div className="center">
@@ -25,7 +35,16 @@ const Navbar = ({arr}) => {
                 )
             } 
             else {
-                setGraph(<Graph arr = {response.data.result} />)
+                var myList = response.data.result
+                myList.sort(function(x, y){
+                  if(x.timestamp>y.timestamp) return 1
+                  else return -1
+                })
+                setGraph(
+                  <>
+                  <Graph arr = {myList} str={str} />
+                  </>
+                )
             }
         })
         .catch(err=>{
@@ -34,11 +53,15 @@ const Navbar = ({arr}) => {
             // setGraph(<h1>Error in loading graph. Please try again after sometime</h1>)
         })
         console.log(_id)
-        setGraph(_id)
+        setGraph(
+          <div className="center">
+              <h1>Graph is Loading....</h1>
+          </div>
+        )
     }
 
     const [buttonList, setButtonList] = React.useState("");
-    const [graph,setGraph] = React.useState('')
+    const [graph,setGraph] = React.useState('Graph is loading....')
     var buttonsArr
     useEffect(()=>{
         setGraph(<div className="center">
@@ -47,10 +70,11 @@ const Navbar = ({arr}) => {
         setButtonList(buttonList)
         axios.get(url+'/metrics')
         .then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             buttonsArr = response.data.result
             setButtonList(buttonsArr.map((button)=>{
-                return <Button key={button._id} _id={button._id} measure={button.measure} dimensions={button.dimensions} onClick={(e)=>{onClick(e,button._id)}} />
+                const str = remove_(button.measure, button.dimensions)
+                return <Button key={button._id} _id={button._id} str = {str} onClick={(e)=>{onClick(e,button._id, str)}} />
             }))
         })
         .catch(err=>{
@@ -77,10 +101,10 @@ const Navbar = ({arr}) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <a className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
+        <h4 className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
           <span className="header__link">
             Data Visualiser</span>
-        </a>
+        </h4>
         <div className="navbar-user d-lg-none"></div>
         <div className="collapse navbar-collapse" id="sidebarCollapse">
           <ul className="navbar-nav">

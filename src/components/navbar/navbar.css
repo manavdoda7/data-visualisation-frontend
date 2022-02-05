@@ -1,2 +1,9 @@
 @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
+
+@media (min-width: 992px) {
+    .navbar-vertical.navbar-expand-lg.show {
+        max-width: 400px !important;
+        border-radius: 0;
+    }
+}
