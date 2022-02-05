@@ -1,8 +1,19 @@
-# Getting Started with Create React App
+# Data-visualisation-frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Index
+  * [Introduction](#introduction)
+  * [Run Project Locally](#localSetup)
+  * [Additional Dependencies](#depend)
+  * [How to use deployed backend link](#deployed)
+ 
+## <a name="introduction"></a>Introduction
+This is the frontend of Data visualisation app.<br>
+To view the working app go to the deployed link and select a metric from the list of metrics in the navbar.<br>
+[Frontend Deployed Link](https://data-visualisation-frontend.netlify.app/)<br>
+[Backend Deployed Link](https://data-visualisation-backend.herokuapp.com/)<br>
+[Backend Repo Link](https://github.com/manavdoda7/data-visualisation-backend)
 
-## Available Scripts
+## <a name="localSetup"></a>Run project locally 
 
 In the project directory, you can run:
 
@@ -39,33 +50,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## <a name="depend"></a>Additional Dependencies 
+#### "bootstrap": For making the UI responsive.
+#### "chart.js": For drawing graphs.
+#### "axios": For making requests to backend.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# data-visualisation-frontend
+## <a name="deployed"></a>To use deployed backend link for making requests: 
+ * Visit the readme of backend repo [here](https://github.com/manavdoda7/data-visualisation-backend)
