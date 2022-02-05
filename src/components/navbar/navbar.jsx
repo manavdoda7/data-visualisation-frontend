@@ -90,8 +90,9 @@ const Navbar = () => {
     var buttonsArr
     useEffect(()=>{
         setGraph(<div className="center">
-            <h1><i class="fas fa-asterisk"></i> Please select a metric from the Navbar</h1>
-        </div>)
+              
+        <h1><i class="fas fa-spinner"></i>Please wait while we fetch data from backend....</h1>
+    </div>)
         setButtonList(buttonList)
         axios.get(url+'/metrics')
         .then(response=>{
@@ -108,6 +109,9 @@ const Navbar = () => {
                 str = remove_(button.measure, button.dimensions)
                 return <Button key={button._id} _id={button._id} str = {str} onClick={(e)=>{onClick(e,button._id, str)}} />
             }))
+            setGraph(<div className="center">
+                <h1><i class="fas fa-asterisk"></i> Please select a metric from the Navbar</h1>
+            </div>)
         })
         .catch(err=>{
             console.log(err)
