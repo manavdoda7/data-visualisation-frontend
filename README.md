@@ -57,3 +57,5 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ## <a name="deployed"></a>To use deployed backend link for making requests: 
  * Visit the readme of backend repo [here](https://github.com/manavdoda7/data-visualisation-backend)
+ * For attaching your own backend change `url` in `backend.js` located at `/src/backend.js` folder
+ 
